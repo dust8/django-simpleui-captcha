@@ -1,0 +1,69 @@
+{% extends "admin/login.html" %}
+{% load i18n static simpletags %}
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+
+{% block head %}
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+<script>
+    window.onload = function () {
+        let captchaEle = document.querySelector("img.captcha");
+        captchaEle.onclick = function () {
+            $.getJSON("/simpleui_captcha/captcha/refresh/", function (result) {
+                $('img.captcha').attr('src', result['image_url']);
+                $('#id_captcha_0').val(result['key'])
+            });
+        };
+
+        let row = document.createElement('div');
+        row.setAttribute('id', 'captcha-group');
+
+        let captcha_input_hidden = document.querySelector('#id_captcha_0');
+        let input_hidden = document.createElement('input');
+        input_hidden.setAttribute('type', 'hidden');
+        input_hidden.setAttribute('name', captcha_input_hidden.getAttribute('name'));
+        input_hidden.setAttribute('id', captcha_input_hidden.getAttribute('id'));
+        input_hidden.setAttribute('value', captcha_input_hidden.getAttribute('value'));
+        input_hidden.setAttribute('required', 'required');
+        captcha_input_hidden.parentNode.removeChild(captcha_input_hidden);
+
+        let captcha_input = document.querySelector('#id_captcha_1');
+        let input = document.createElement('input');
+        input.setAttribute('type', 'text');
+        input.setAttribute('name', captcha_input.getAttribute('name'));
+        input.setAttribute('id', captcha_input.getAttribute('id'));
+        input.setAttribute('v-model', 'captcha');
+        input.setAttribute('required', 'required');
+        input.setAttribute('placeholder', '请输入验证码');
+        input.setAttribute('class', 'el-input__inner');
+        captcha_input.parentNode.removeChild(captcha_input);
+
+        row.appendChild(captchaEle)
+        row.appendChild(input_hidden)
+        row.appendChild(input)
+
+        let loginForm = document.querySelector('#login-form');
+        let loginBtn = document.querySelector('.login-btn');
+        loginForm.insertBefore(row, loginBtn);
+    }
+</script>
+<style>
+    #captcha-group {
+        display: flex;
+    }
+
+    #captcha-group>img {
+        cursor: pointer;
+    }
+
+    #captcha-group>input {
+        margin-left: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block form %}
+{{ block.super }}
+<div hidden="hidden">
+    {{ form.captcha }}
+</div>
+{% endblock %}

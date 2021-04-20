@@ -1,0 +1,4 @@
+include LICENSE
+include README.rst
+recursive-include simpleui_captcha/templates *
+recursive-include screenshoot *
