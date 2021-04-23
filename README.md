@@ -1,4 +1,5 @@
 # django-simpleui-captcha
+[![PyPI version](https://badge.fury.io/py/django-simpleui-captcha.svg)](https://badge.fury.io/py/django-simpleui-captcha)
 
 django-simpleui-captcha 是一个 django 后台管理登录验证码插件
 
