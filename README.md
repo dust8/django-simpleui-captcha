@@ -31,3 +31,22 @@ path('simpleui_captcha/', include('simpleui_captcha.urls')),
 ```
 
 ### 3. 运行 `python manage.py migrate` 迁移验证码模型
+
+### 4.(可选)后台在连续登录n次失败后,要求输入验证码登录
+```py
+# urls.py
+from simpleui_captcha.views import LoginWithCaptcha
+
+
+urlpatterns = [
+    path('admin/login/', LoginWithCaptcha.as_view(), name='admin_login'),
+    path('admin/', admin.site.urls),
+    ...
+]
+
+# settings.py 默认值
+SIMPLEUI_CAPTCHA = {
+    'FAILED_LOGIN_COUNT_NAME': 'failed_login_count', # session 的键名
+    'MAX_FAILED_LOGIN_COUNT': 3, # 不需要输验证码的最大失败次数
+}
+```
