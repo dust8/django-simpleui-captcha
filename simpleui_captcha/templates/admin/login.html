@@ -3,7 +3,7 @@
 {% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
 
 {% block head %}
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+<script src="{% static 'simpleui_captcha/js/jquery.min.js' %}"></script>
 <script>
     window.onload = function () {
         let captchaEle = document.querySelector("img.captcha");
