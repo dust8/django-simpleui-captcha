@@ -3,7 +3,7 @@
 {% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
 
 {% block head %}
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+<script src="{% static 'simpleui_captcha/jquery-3.7.1.min.js' %}"></script>
 <script>
     window.onload = function () {
         let captchaEle = document.querySelector("img.captcha");
@@ -36,10 +36,10 @@
         input.setAttribute('placeholder', '请输入验证码');
         input.setAttribute('class', 'el-input__inner');
         captcha_input.parentNode.removeChild(captcha_input);
-
+        
+        row.appendChild(input)
         row.appendChild(captchaEle)
         row.appendChild(input_hidden)
-        row.appendChild(input)
 
         let loginForm = document.querySelector('#login-form');
         let loginBtn = document.querySelector('.login-btn');
@@ -53,10 +53,7 @@
 
     #captcha-group>img {
         cursor: pointer;
-    }
-
-    #captcha-group>input {
-        margin-left: 10px;
+        margin-left: 16px;
     }
 </style>
 {% endblock %}

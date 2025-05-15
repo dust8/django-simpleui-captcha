@@ -1,4 +1,4 @@
-from django.contrib import messages
+from django.contrib import messages, admin
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
@@ -18,7 +18,12 @@ class LoginWithCaptcha(View):
         else:
             form = AuthenticationForm()
 
-        return render(request, 'admin/login.html', {'form': form})
+        context = {
+            "site_title": admin.site.site_title ,
+            "site_header": admin.site.site_header,
+            'form': form,
+        }
+        return render(request, 'admin/login.html', context)
 
     def post(self, request):
         failed_login_count = request.session.get(dsc_settings.FAILED_LOGIN_COUNT_NAME, 0)
